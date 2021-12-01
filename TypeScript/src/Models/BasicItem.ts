@@ -10,9 +10,9 @@ export default class BasicItem extends Item {
 
     protected computeQuality() {
         if (this.sellIn > 0) {
-            return this.quality--;
+            return this.quality - 1;
         } else {
-            return this.quality -= 2;
+            return this.quality - 2;
         }
     }
 }

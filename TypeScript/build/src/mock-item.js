@@ -35,4 +35,4 @@ export default [
         "quality": 40,
         "sellIn": 15
     }
-]
+];

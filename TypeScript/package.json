@@ -37,5 +37,11 @@
       "html",
       "text"
     ]
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
+    "commander": "^8.3.0",
+    "figlet": "^1.5.2"
   }
 }

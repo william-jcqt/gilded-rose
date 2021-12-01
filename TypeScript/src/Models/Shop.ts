@@ -13,11 +13,30 @@ export default class Shop {
         this._repository = repository
     }
 
-    public updateInventory() { 
+    public createItem(rawItem: RawItem): void {
+        let items = this.rawToClass(this._repository.getInventory());
+        switch (rawItem.type) {
+            case ItemType.AGED:
+                items = [...items, new AgedItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+            case ItemType.LIMITED:
+                items = [...items, new LimitedItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+            case ItemType.LEGENDARY:
+                items = [...items, new LegendaryItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+            default:
+                items = [...items, new BasicItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+        }
+        this._repository.saveInventory(this.classToRaw(items));
+    }
+
+    public getInventory(): Array<RawItem> {
+        return this._repository.getInventory();
+    }
+
+    public updateInventory() {
         const items = this.rawToClass(this._repository.getInventory());
         for (const item of items) {
             item.update();
-        } 
+        }
         this._repository.saveInventory(this.classToRaw(items));
     }
 

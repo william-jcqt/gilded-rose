@@ -12,10 +12,10 @@ export default abstract class Item {
         this._sellIn = sellIn;
     }
 
-    private decreaseSellIn(){
-        if(this.sellIn > 0) this.sellIn--;
+    private decreaseSellIn() {
+        if (this.sellIn > 0) this.sellIn--;
     }
-    
+
     protected updateQuality(quality: number): void {
         if (quality > Item.MAX_QUALITY || quality < Item.MIN_QUALITY) {
             return;
@@ -29,45 +29,6 @@ export default abstract class Item {
         this.updateQuality(this.computeQuality());
         this.decreaseSellIn();
     }
-    // {
-    //     let nextQuality: number = this.quality;
-
-    //     switch (this.name) {
-    //         case "Aged Brie":
-    //             if(this.quality < 49) nextQuality++;
-    //             break;
-    //         case "Backstage passes":
-    //             if (this.sellIn == 0) {
-    //                 nextQuality = 0;
-    //                 break;
-    //             }
-    //             if (this.sellIn < 5) {
-    //                 nextQuality += 3;
-    //                 break;
-    //             }
-    //             if (this.sellIn < 10) {
-    //                 nextQuality += 2;
-    //                 break;
-    //             }
-    //             nextQuality++;
-    //             break;
-    //         case "Sulfuras":
-    //             return;
-    //         default:
-    //             if (this.sellIn > 0) {
-    //                 nextQuality--;
-    //             } else {
-    //                 nextQuality -= 2;
-    //             }
-    //     }
-
-    //     this.decreaseSellIn();
-
-    //     if (nextQuality > 50 || nextQuality < 0) {
-    //         return;
-    //     }
-    //     this.quality = nextQuality;
-    // }
 
     public get name(): string {
         return this._name;
