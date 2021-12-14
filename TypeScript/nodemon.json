@@ -1,0 +1,14 @@
+{
+    "restartable": "false",
+    "ignore": [
+      ".git",
+      "node_modules/",
+      "dist/",
+      "generated/"
+    ],
+    "watch": ["./src/"],
+    "execMap": {
+      "ts": "node --experimental-json-modules --experimental-specifier-resolution=node --loader ts-node/esm ./src/main.ts"
+    },
+    "ext": "js,json,ts"
+  }

@@ -1,11 +1,15 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "ESNext",
         "target": "es5",
+        "esModuleInterop": true,
         "strict": true,
         "noImplicitAny": false,
+        "forceConsistentCasingInFileNames": true,
         "sourceMap": false,
-        "resolveJsonModule": true,
+        "moduleResolution": "Node",
+        "rootDir": "./src",
+        "outDir": "./build"
     },
     "exclude": [
         "node_modules"
