@@ -2,9 +2,8 @@
   "name": "gilded-rose-kata",
   "version": "1.0.0",
   "description": "Gilded Rose kata in TypeScript",
-  "type": "module",
   "scripts": {
-    "start": "nodemon --config nodemon.json src/main.ts",
+    "start": "ts-node --project tsconfig.json ./src/main.ts",
     "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha -r ts-node/register 'tests/**/*.ts'",
     "test2": "nyc mocha"
   },

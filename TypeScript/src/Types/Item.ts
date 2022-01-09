@@ -1,6 +1,6 @@
 declare type RawItem = {
     name: string,
-    type: string,
+    type: ItemType,
     quality: number,
     sellIn: number
 }

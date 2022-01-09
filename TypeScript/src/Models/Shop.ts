@@ -18,10 +18,13 @@ export default class Shop {
         switch (rawItem.type) {
             case ItemType.AGED:
                 items = [...items, new AgedItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+                break;
             case ItemType.LIMITED:
                 items = [...items, new LimitedItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+                break;
             case ItemType.LEGENDARY:
                 items = [...items, new LegendaryItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+                break;
             default:
                 items = [...items, new BasicItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
         }

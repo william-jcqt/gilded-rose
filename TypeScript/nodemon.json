@@ -7,8 +7,7 @@
       "generated/"
     ],
     "watch": ["./src/"],
-    "execMap": {
-      "ts": "node --experimental-json-modules --experimental-specifier-resolution=node --loader ts-node/esm ./src/main.ts"
-    },
+    "exec": "ts-node ./src/main",
     "ext": "js,json,ts"
   }
+  
