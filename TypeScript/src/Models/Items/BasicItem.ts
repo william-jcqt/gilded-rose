@@ -1,11 +1,11 @@
 import Item from "./Item";
 
 export default class BasicItem extends Item {
-    constructor(name: string, quality: number, sellIn: number) {
+    constructor(name: string, quality: number, sellIn: number, value: number) {
         if (quality > Item.MAX_QUALITY || quality < Item.MIN_QUALITY) {
             throw new Error("quality must be between 0 and 50");
         }
-        super(name, quality, sellIn);
+        super(name, quality, sellIn, value);
     }
 
     protected computeQuality() {

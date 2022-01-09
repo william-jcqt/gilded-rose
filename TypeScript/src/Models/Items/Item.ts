@@ -5,11 +5,13 @@ export default abstract class Item {
     private _name: string;
     private _quality: number;
     private _sellIn: number;
+    private _value: number;
 
-    public constructor(name: string, quality: number, sellIn: number) {
+    public constructor(name: string, quality: number, sellIn: number, value: number) {
         this._name = name;
         this._quality = quality;
         this._sellIn = sellIn;
+        this._value = value;
     }
 
     private decreaseSellIn() {
@@ -52,5 +54,13 @@ export default abstract class Item {
 
     public set sellIn(value: number) {
         this._sellIn = value;
+    }
+
+    public get value(): number {
+        return this._value;
+    }
+
+    public set value(value: number) {
+        this._value = value;
     }
 }

@@ -1,37 +1,59 @@
 import { ItemType, RawItem } from "../Types/Item";
-import AgedItem from "./AgedItem";
-import BasicItem from "./BasicItem";
-import Item from "./Item";
-import LegendaryItem from "./LegendaryItem";
-import LimitedItem from "./LimitedItem";
+import AgedItem from "./Items/AgedItem";
+import BasicItem from "./Items/BasicItem";
+import Item from "./Items/Item";
+import LegendaryItem from "./Items/LegendaryItem";
+import LimitedItem from "./Items/LimitedItem";
 import ItemsRepository from "./Repository/ItemsRepository";
 
 export default class Shop {
     private _repository: ItemsRepository;
+    private balance: number;
 
-    constructor(repository: ItemsRepository) {
+    constructor(repository: ItemsRepository, balance: number) {
         this._repository = repository
+        this.balance = balance;
     }
 
     public createItem(rawItem: RawItem): void {
         let items = this.rawToClass(this._repository.getInventory());
         switch (rawItem.type) {
             case ItemType.AGED:
-                items = [...items, new AgedItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+                items = [...items, new AgedItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value)];
                 break;
             case ItemType.LIMITED:
-                items = [...items, new LimitedItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+                items = [...items, new LimitedItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value)];
                 break;
             case ItemType.LEGENDARY:
-                items = [...items, new LegendaryItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+                items = [...items, new LegendaryItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value)];
                 break;
             default:
-                items = [...items, new BasicItem(rawItem.name, rawItem.quality, rawItem.sellIn)];
+                items = [...items, new BasicItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value)];
         }
         this._repository.saveInventory(this.classToRaw(items));
     }
 
+    public buyItem(itemName: string) {
+        let inventory: Array<RawItem> = this.getInventory();
+        const index = inventory.findIndex(({ name }) => name === itemName);
+        this.balance = this.balance + inventory[index].value;
+        inventory.splice(index, 1);
+        this._repository.saveInventory(inventory);
+    }
+
+    public sellItem(item: RawItem) {
+        this.balance = this.balance - item.value;
+        const inventory = this.getInventory();
+        inventory.push(item);
+        this._repository.saveInventory(inventory);
+    }
+
     public getInventory(): Array<RawItem> {
+        return this._repository.getInventory();
+    }
+
+    public getInventoryByQuantity(): Array<RawItem> {
+        // var map = arr.reduce((cnt, cur) => (cnt[cur] = cnt[cur] + 1 || 1, cnt), {});
         return this._repository.getInventory();
     }
 
@@ -47,13 +69,13 @@ export default class Shop {
         return rawInventory.map(rawItem => {
             switch (rawItem.type) {
                 case ItemType.AGED:
-                    return new AgedItem(rawItem.name, rawItem.quality, rawItem.sellIn);
+                    return new AgedItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value);
                 case ItemType.LIMITED:
-                    return new LimitedItem(rawItem.name, rawItem.quality, rawItem.sellIn);
+                    return new LimitedItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value);
                 case ItemType.LEGENDARY:
-                    return new LegendaryItem(rawItem.name, rawItem.quality, rawItem.sellIn);
+                    return new LegendaryItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value);
                 default:
-                    return new BasicItem(rawItem.name, rawItem.quality, rawItem.sellIn);
+                    return new BasicItem(rawItem.name, rawItem.quality, rawItem.sellIn, rawItem.value);
             }
         });
     }
@@ -80,6 +102,7 @@ export default class Shop {
                 type: type,
                 quality: item.quality,
                 sellIn: item.sellIn,
+                value: item.value
             }
         });
     }
